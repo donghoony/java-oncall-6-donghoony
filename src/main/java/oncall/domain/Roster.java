@@ -57,13 +57,6 @@ public class Roster {
     public Worker checkNextWorker() {
         Worker expectedWorker;
         initIterator();
-        if (skipped) {
-            moveIteratorNext();
-            expectedWorker = iterator.next();
-            moveIteratorPrevious();
-            moveIteratorPrevious();
-            return expectedWorker;
-        }
         expectedWorker = iterator.next();
         moveIteratorPrevious();
         return expectedWorker;
