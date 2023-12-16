@@ -1,6 +1,8 @@
 package oncall.domain;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import oncall.exception.DuplicateWorkerException;
 import oncall.exception.IllegalRoasterSizeException;
 
@@ -9,10 +11,13 @@ public class Roster {
     private static final int MAX_WORKERS = 35;
 
     private final List<Worker> workers;
+    private ListIterator<Worker> iterator;
+    private boolean skipped = false;
 
     public Roster(List<Worker> workers) {
         validateRoster(workers);
         this.workers = workers;
+        this.iterator = workers.listIterator();
     }
 
     public boolean isSameAs(Roster roster) {
@@ -22,6 +27,36 @@ public class Roster {
 
         return count == workers.size();
     }
+
+    public Worker getNextWorker() {
+        initIterator();
+        if (skipped) {
+            iterator.next();
+            skipped = false;
+            initIterator();
+        }
+
+        return iterator.next();
+    }
+
+    public Worker getAfterNextWorker() {
+        getNextWorker();
+        Worker nextAfterWorker = getNextWorker();
+        skipped = true;
+
+        if (!iterator.hasPrevious()) {
+            iterator = workers.listIterator(workers.size() - 1);
+        }
+        iterator.previous();
+        return nextAfterWorker;
+    }
+
+    private void initIterator() {
+        if (!iterator.hasNext()) {
+            iterator = workers.listIterator();
+        }
+    }
+
 
     private boolean contains(Worker worker) {
         return workers.contains(worker);
