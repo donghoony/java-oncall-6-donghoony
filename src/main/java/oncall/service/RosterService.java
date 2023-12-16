@@ -12,26 +12,24 @@ import oncall.domain.Worker;
 
 public class RosterService {
     private final MonthlyCalendar monthlyCalendar;
-    private final CombinedRoster combinedRoster;
     private Worker previousWorker;
 
-    public RosterService(MonthlyCalendar monthlyCalendar, CombinedRoster combinedRoster) {
+    public RosterService(MonthlyCalendar monthlyCalendar) {
         this.monthlyCalendar = monthlyCalendar;
-        this.combinedRoster = combinedRoster;
     }
 
-    public MonthlyRoster makeMonthlyRoster() {
+    public MonthlyRoster makeMonthlyRoster(CombinedRoster combinedRoster) {
         List<DailyRoster> roasters = new ArrayList<>();
 
         for (RosterDay rosterDay : getRosterDays()) {
-            Worker worker = getWorker(rosterDay);
+            Worker worker = getWorker(combinedRoster, rosterDay);
             roasters.add(new DailyRoster(rosterDay, worker));
         }
 
         return new MonthlyRoster(roasters);
     }
 
-    private Worker getWorker(RosterDay rosterDay) {
+    private Worker getWorker(CombinedRoster combinedRoster, RosterDay rosterDay) {
         Worker worker = combinedRoster.getWorker(rosterDay, previousWorker);
         previousWorker = worker;
         return worker;
