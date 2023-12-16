@@ -43,17 +43,28 @@ public class Roster {
         Worker nextAfterWorker = getNextWorker();
         skipped = true;
 
-        if (!iterator.hasPrevious()) {
-            iterator = workers.listIterator(workers.size() - 1);
-        }
-        iterator.previous();
+        moveIteratorPrevious();
         return nextAfterWorker;
+    }
+
+    public Worker checkNextWorker() {
+        initIterator();
+        Worker expectedWorker = iterator.next();
+        moveIteratorPrevious();
+        return expectedWorker;
     }
 
     private void initIterator() {
         if (!iterator.hasNext()) {
             iterator = workers.listIterator();
         }
+    }
+
+    private void moveIteratorPrevious() {
+        if (!iterator.hasPrevious()) {
+            iterator = workers.listIterator(workers.size() - 1);
+        }
+        iterator.previous();
     }
 
 

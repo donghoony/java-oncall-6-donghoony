@@ -17,14 +17,16 @@ public class CombinedRoster {
     }
 
     private Worker getWeekdayWorker(Worker previousWorker) {
-        if (weekdayRoster.getNextWorker().equals(previousWorker)) {
+        Worker worker = weekdayRoster.checkNextWorker();
+        if (worker.equals(previousWorker)) {
             return weekdayRoster.getAfterNextWorker();
         }
         return weekdayRoster.getNextWorker();
     }
 
     private Worker getHolidayWorker(Worker previousWorker) {
-        if (holidayRoster.getNextWorker().equals(previousWorker)) {
+        Worker worker = holidayRoster.checkNextWorker();
+        if (worker.equals(previousWorker)) {
             return holidayRoster.getAfterNextWorker();
         }
         return holidayRoster.getNextWorker();
