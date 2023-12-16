@@ -38,9 +38,8 @@ public class Roster {
     private Worker getSkippedWorker() {
         initIterator();
         Worker worker = iterator.next();
+        moveIteratorNext();
         skipped = false;
-        initIterator();
-        iterator.next();
 
         return worker;
     }
@@ -56,8 +55,16 @@ public class Roster {
     }
 
     public Worker checkNextWorker() {
+        Worker expectedWorker;
         initIterator();
-        Worker expectedWorker = iterator.next();
+        if (skipped) {
+            moveIteratorNext();
+            expectedWorker = iterator.next();
+            moveIteratorPrevious();
+            moveIteratorPrevious();
+            return expectedWorker;
+        }
+        expectedWorker = iterator.next();
         moveIteratorPrevious();
         return expectedWorker;
     }
@@ -68,9 +75,17 @@ public class Roster {
         }
     }
 
+    private void moveIteratorNext() {
+        if (!iterator.hasNext()) {
+            iterator = workers.listIterator();
+        }
+        iterator.next();
+    }
+
     private void moveIteratorPrevious() {
         if (!iterator.hasPrevious()) {
             iterator = workers.listIterator(workers.size() - 1);
+            return;
         }
         iterator.previous();
     }
