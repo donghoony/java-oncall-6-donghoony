@@ -1,5 +1,7 @@
 package oncall.io;
 
+import oncall.domain.MonthlyRoster;
+
 public interface OnCallOutput {
     void printAskingMonthAndWeekDay();
 
@@ -7,5 +9,5 @@ public interface OnCallOutput {
 
     void printAskingHolidayWorkers();
 
-    void printRoster();
+    void printRoster(MonthlyRoster monthlyRoster);
 }
