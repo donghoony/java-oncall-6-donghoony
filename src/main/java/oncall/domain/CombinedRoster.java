@@ -9,15 +9,15 @@ public class CombinedRoster {
         this.holidayRoster = holidayRoster;
     }
 
-    public Worker getWeekdayWorker(Worker yesterdayWorker) {
-        if (weekdayRoster.getNextWorker().equals(yesterdayWorker)) {
+    public Worker getWeekdayWorker(Worker previousWorker) {
+        if (weekdayRoster.getNextWorker().equals(previousWorker)) {
             return weekdayRoster.getAfterNextWorker();
         }
         return weekdayRoster.getNextWorker();
     }
 
-    public Worker getHolidayWorker(Worker yesterdayWorker) {
-        if (holidayRoster.getNextWorker().equals(yesterdayWorker)) {
+    public Worker getHolidayWorker(Worker previousWorker) {
+        if (holidayRoster.getNextWorker().equals(previousWorker)) {
             return holidayRoster.getAfterNextWorker();
         }
         return holidayRoster.getNextWorker();
