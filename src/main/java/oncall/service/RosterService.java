@@ -30,7 +30,7 @@ public class RosterService {
 
         return new MonthlyRoster(roasters);
     }
-    
+
     private Worker getWorker(RosterDay rosterDay) {
         Worker worker = combinedRoster.getWorker(rosterDay, previousWorker);
         previousWorker = worker;
