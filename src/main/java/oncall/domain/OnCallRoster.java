@@ -15,6 +15,18 @@ public class OnCallRoster {
         this.workers = workers;
     }
 
+    public boolean isSameAs(OnCallRoster roster) {
+        int count = (int) workers.stream()
+                .filter(roster::contains)
+                .count();
+
+        return count == workers.size();
+    }
+
+    private boolean contains(Worker worker) {
+        return workers.contains(worker);
+    }
+
     private void validateRoster(List<Worker> workers) {
         validateSize(workers);
         validateUniqueNames(workers);
