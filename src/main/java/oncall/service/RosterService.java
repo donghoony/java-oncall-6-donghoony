@@ -31,7 +31,7 @@ public class RosterService {
     }
 
     private List<RosterDay> getRosterDays(MonthlyCalendar monthlyCalendar) {
-        return IntStream.range(1, monthlyCalendar.getLastDay())
+        return IntStream.rangeClosed(1, monthlyCalendar.getLastDay())
                 .mapToObj(monthlyCalendar::get)
                 .toList();
     }
