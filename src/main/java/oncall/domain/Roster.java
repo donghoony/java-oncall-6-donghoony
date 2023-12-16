@@ -4,18 +4,18 @@ import java.util.List;
 import oncall.exception.DuplicateWorkerException;
 import oncall.exception.IllegalRoasterSizeException;
 
-public class OnCallRoster {
+public class Roster {
     private static final int MIN_WORKERS = 5;
     private static final int MAX_WORKERS = 35;
 
     private final List<Worker> workers;
 
-    public OnCallRoster(List<Worker> workers) {
+    public Roster(List<Worker> workers) {
         validateRoster(workers);
         this.workers = workers;
     }
 
-    public boolean isSameAs(OnCallRoster roster) {
+    public boolean isSameAs(Roster roster) {
         int count = (int) workers.stream()
                 .filter(roster::contains)
                 .count();
