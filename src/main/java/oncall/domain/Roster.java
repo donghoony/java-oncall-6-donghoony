@@ -30,12 +30,19 @@ public class Roster {
     public Worker getNextWorker() {
         initIterator();
         if (skipped) {
-            iterator.next();
-            skipped = false;
-            initIterator();
+            return getSkippedWorker();
         }
-
         return iterator.next();
+    }
+
+    private Worker getSkippedWorker() {
+        initIterator();
+        Worker worker = iterator.next();
+        skipped = false;
+        initIterator();
+        iterator.next();
+
+        return worker;
     }
 
     public Worker getAfterNextWorker() {
@@ -43,6 +50,7 @@ public class Roster {
         Worker nextAfterWorker = getNextWorker();
         skipped = true;
 
+        moveIteratorPrevious();
         moveIteratorPrevious();
         return nextAfterWorker;
     }
