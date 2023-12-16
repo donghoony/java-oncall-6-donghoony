@@ -17,7 +17,7 @@ public class MonthlyCalendar {
         return new RosterDay(MonthDay.of(month, day), startDayOfWeek.plus(day - 1L));
     }
 
-    public boolean hasNextDay(int day) {
-        return day < month.minLength();
+    public int getLastDay() {
+        return month.minLength();
     }
 }
