@@ -7,7 +7,6 @@ import oncall.domain.Worker;
 public interface OnCallInput {
     MonthlyCalendar getMonthAndDayOfWeek();
 
-    List<Worker> getWeekDayWorkers();
+    List<Worker> getWorkers();
 
-    List<Worker> getHolidayWorkers();
 }
