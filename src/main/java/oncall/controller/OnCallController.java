@@ -25,10 +25,7 @@ public class OnCallController extends ExceptionLoopController {
     public void makeRoster() {
         MonthlyCalendar monthlyCalendar = repeatUntilValid(this::makeMonthlyCalendar);
 
-        Roster weekDayRoster = repeatUntilValid(this::makeWeekDayRoster);
-        Roster holidayRoster = repeatUntilValid(this::makeHolidayRoster);
-        CombinedRoster combinedRoster = new CombinedRoster(weekDayRoster, holidayRoster);
-
+        CombinedRoster combinedRoster = repeatUntilValid(this::makeCombinedRoster);
         MonthlyRoster monthlyRoster = rosterService.makeMonthlyRoster(monthlyCalendar, combinedRoster);
         output.printRoster(monthlyRoster);
     }
@@ -36,6 +33,12 @@ public class OnCallController extends ExceptionLoopController {
     private MonthlyCalendar makeMonthlyCalendar() {
         output.printAskingMonthAndWeekDay();
         return input.getMonthAndDayOfWeek();
+    }
+
+    private CombinedRoster makeCombinedRoster() {
+        Roster weekDayRoster = makeWeekDayRoster();
+        Roster holidayRoster = makeHolidayRoster();
+        return new CombinedRoster(weekDayRoster, holidayRoster);
     }
 
     private Roster makeWeekDayRoster() {
